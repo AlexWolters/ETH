@@ -49,6 +49,9 @@ contractInstance.ownerOf.call(tokenId,{ from: web3.eth.defaultAccount  },
 }
 
 var result2;
+function foo(input){
+result2=input;
+}
 
 async function getTokenUri(abi,adr,tokenId){
 
@@ -56,9 +59,11 @@ let web3 = new Web3(window.ethereum);
 web3.eth.defaultAccount=web3.eth.accounts[0];
 let contractInstance = web3.eth.contract(abi).at(adr);
 let result=await contractInstance._tokenURIs.call(tokenId,{ from: web3.eth.defaultAccount },
-(err, res)=>{console.log(res);
-this.result2=res;}
+(err, res)=>{foo(res);
+}
 );
+
+return result2;
 
 }
 

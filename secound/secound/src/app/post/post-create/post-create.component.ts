@@ -38,6 +38,7 @@ export class PostCreateComponent{
   OnSmart(){
   this.promise=getTokenUri(this.Abi,this.Address,this.tokenId);
   this.promise.then(data => {  this.InputString=data });
+ 
   //for create Token
 
   //this.promise=createToken(this.Abi,this.Address,this.Uri,Web3,this.price,this.rent);
@@ -47,7 +48,7 @@ export class PostCreateComponent{
   //this.promise.then(data => {  this.InputString=data });
 
   }
-
+ 
   Address= '0x6c4DD65776A345D5690E2cd2578F11C14A9C35A8';
   
 		
