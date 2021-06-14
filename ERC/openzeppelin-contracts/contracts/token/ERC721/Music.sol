@@ -13,12 +13,14 @@ contract Music is ERC721{
     uint256 counter;
     
     mapping(uint256 =>address) Subowner;
+    mapping (address =>uint256)IdFinder;
     }
     
     struct RenterStruct{
     uint256 counter;
     mapping(uint256 =>address) Renter; 
-    mapping(address => uint) Deadline;   
+    mapping(address => uint) Deadline;
+    mapping (address =>uint256)IdFinder;
     }
 
     mapping (uint256 => string) public _tokenURIs;
@@ -65,34 +67,39 @@ contract Music is ERC721{
         return personalID;
     }
     
-    function buyToken(uint256 tokenId) public payable {
+    function buyToken(uint256 tokenId) public payable returns (uint256){
         require(_exists(tokenId), "ERC721Metadata: tokenId does not exist");
         if(msg.value>=_getBuyPrice(tokenId)){
         payable(ownerOf(tokenId)).transfer(msg.value);
-        //payable(msg.sender).transfer((msg.value-_getBuyPrice(tokenId)));
-            
         
         uint256 _counter= Subowners[tokenId].counter;
         Subowners[tokenId].Subowner[_counter]=msg.sender;
+        Subowners[tokenId].IdFinder[msg.sender]=_counter;
         Subowners[tokenId].counter=Subowners[tokenId].counter+1;
+        return _counter;
         }
         else{
-        payable(msg.sender).transfer(msg.value);    
+        payable(msg.sender).transfer(msg.value); 
+        return 100000000000000000000;
         }
     }
     
     
-    function rentToken(uint256 tokenId, uint256 _weeks) public payable{
+    
+    function rentToken(uint256 tokenId, uint256 _weeks) public payable returns (uint256){
         require(_exists(tokenId), "ERC721Metadata: tokenId does not exist");
         if(msg.value>= _weeks*_getRentPrice(tokenId)){
         payable(ownerOf(tokenId)).transfer(msg.value);
         uint256 _counter= Renters[tokenId].counter;
         Renters[tokenId].Renter[_counter]=msg.sender;
         Renters[tokenId].Deadline[msg.sender]=block.timestamp+_weeks*1 minutes;
+        Renters[tokenId].IdFinder[msg.sender]=_counter;
         Renters[tokenId].counter=Renters[tokenId].counter+1;
+        return _counter;
         }
         else{
-        payable(msg.sender).transfer(msg.value);     
+        payable(msg.sender).transfer(msg.value);    
+        return 100000000000000000000;
         }
         
     }
@@ -114,6 +121,17 @@ contract Music is ERC721{
         
     } 
     
+     function _getMyOwnerId(uint256 tokenId) public view returns (uint256){
+        require(_exists(tokenId), "ERC721Metadata: tokenId does not exist");
+        return Subowners[tokenId].IdFinder[msg.sender];
+        
+    } 
+    
+    function _getMyRenterId(uint256 tokenId) public view returns (uint256){
+        require(_exists(tokenId), "ERC721Metadata: tokenId does not exist");
+        return Renters[tokenId].IdFinder[msg.sender];
+        
+    } 
     
     function _getOwnerAmmount(uint256 tokenId) public view returns (uint256){
         require(_exists(tokenId), "ERC721Metadata: tokenId does not exist");
