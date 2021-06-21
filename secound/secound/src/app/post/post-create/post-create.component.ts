@@ -16,7 +16,7 @@ export class PostCreateComponent{
  
   promise = new Promise<string>((resolve, reject) => {});
   price=100000000000000000;
-  tokenId=1;
+  tokenId=0;
   rent=1;
   
   
@@ -36,20 +36,20 @@ export class PostCreateComponent{
   }
 
   OnSmart(){
-  this.promise=getTokenUri(this.Abi,this.Address,this.tokenId);
-  this.promise.then(data => {  this.InputString=data });
+  //this.promise=getTokenUri(this.Abi,this.Address,this.tokenId);
+  //this.promise.then(data => {  this.InputString=data });
  
   //for create Token
 
   //this.promise=createToken(this.Abi,this.Address,this.Uri,Web3,this.price,this.rent);
   //this.promise.then(data => {  this.InputString=data });
   
-  //this.promise=buyToken(this.Abi,this.Address, this.tokenId, 100000000000000000);
-  //this.promise.then(data => {  this.InputString=data });
+ this.promise=buyToken(this.Abi,this.Address, this.tokenId, 100000000000000000);
+  this.promise.then(data => {  this.InputString=data });
 
   }
  
-  Address= '0x6c4DD65776A345D5690E2cd2578F11C14A9C35A8';
+  Address= '0xd22Ea16f544EF851AA13A23a875Cc97b81a3E702';
   
 		
   Uri='Random Uri';
@@ -144,6 +144,7 @@ export class PostCreateComponent{
 				"type": "uint256"
 			}
 		],
+    "payable": true,
 		"stateMutability": "payable",
 		"type": "function"
 	},

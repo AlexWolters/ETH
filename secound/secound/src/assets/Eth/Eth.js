@@ -51,6 +51,7 @@ contractInstance.ownerOf.call(tokenId,{ from: web3.eth.defaultAccount  },
 var result2;
 function foo(input){
 result2=input;
+console.log(input);
 }
 
 async function getTokenUri(abi,adr,tokenId){
@@ -73,10 +74,10 @@ async function buyToken(abi,adr,tokenId,price){
 
 let web3 = new Web3(window.ethereum);
 web3.eth.defaultAccount=web3.eth.accounts[0];
-let contractInstance = web3.eth.contract(abi).at(adr);
+const contractInstance = web3.eth.contract(abi).at(adr);
 this._payable=true;
-let result=await contractInstance.buyToken(tokenId,{ from: web3.eth.defaultAccount, data: abi, value: '1'},
-  (err, res) => { console.log(err); });
+let result=await contractInstance.buyToken.sendTransaction(tokenId,{ from: web3.eth.defaultAccount, value: 100000000000000000},
+function(err, res){console.log(res);});
 return result ;
 
 }
