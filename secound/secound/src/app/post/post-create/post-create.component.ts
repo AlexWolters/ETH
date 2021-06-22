@@ -5,7 +5,18 @@ declare function getAccount(): Promise<string>;
 declare function getBalance(acc: string): Promise<string>;
 declare function createToken(abi:object ,adr:string ,uri:string,example:string,price:number,rent:number ): Promise<string>;
 declare function getTokenUri(abi:object,adr:string , tokenid:number): Promise<string>;
+declare function OwnerOf(abi:object,adr:string ,  tokenid:number): Promise<string>;
+
 declare function buyToken(abi:object,adr:string ,  tokenid:number, price:number): Promise<string>;
+declare function getPrice(abi:object,adr:string ,  tokenid:number): Promise<string>;
+declare function getMyOwnerId(abi:object,adr:string ,  tokenid:number): Promise<string>;
+declare function getSubOwner(abi:object,adr:string ,  tokenid:number, index:number): Promise<string>;
+
+declare function getRent(abi:object,adr:string ,  tokenid:number): Promise<string>;
+declare function getRenter(abi:object,adr:string ,  tokenid:number, index:number): Promise<string>;declare function getMyOwnerId(abi:object,adr:string ,  tokenid:number): Promise<string>;
+declare function getDeadline(abi:object,adr:string ,  tokenid:number, target:string): Promise<string>;
+declare function getMyRenterId(abi:object,adr:string ,  tokenid:number): Promise<string>;
+declare function rentToken(abi:object,adr:string ,  tokenid:number, price:number, weeks:number): Promise<string>;
 @Component({
   selector: 'app-post-create',
   templateUrl: './post-create.component.html'
@@ -16,8 +27,8 @@ export class PostCreateComponent{
  
   promise = new Promise<string>((resolve, reject) => {});
   price=100000000000000000;
-  tokenId=0;
-  rent=1;
+  tokenId=3;
+  rent=100;
   
   
   OnEthButton() {
@@ -36,23 +47,25 @@ export class PostCreateComponent{
   }
 
   OnSmart(){
+  this.promise=getMyOwnerId(this.Abi,this.Address,this.tokenId);
+  this.promise.then(data => {  this.InputString=data });
+
   //this.promise=getTokenUri(this.Abi,this.Address,this.tokenId);
   //this.promise.then(data => {  this.InputString=data });
- 
   //for create Token
 
   //this.promise=createToken(this.Abi,this.Address,this.Uri,Web3,this.price,this.rent);
   //this.promise.then(data => {  this.InputString=data });
   
- this.promise=buyToken(this.Abi,this.Address, this.tokenId, 100000000000000000);
-  this.promise.then(data => {  this.InputString=data });
+//this.promise=buyToken(this.Abi,this.Address, this.tokenId, 100000000000000000);
+// this.promise.then(data => {  this.InputString=data });
 
   }
  
   Address= '0xd22Ea16f544EF851AA13A23a875Cc97b81a3E702';
   
 		
-  Uri='Random Uri';
+  Uri='TESTBUY';
 
   Abi=[
 	{
@@ -198,6 +211,7 @@ export class PostCreateComponent{
 				"type": "uint256"
 			}
 		],
+    "payable": true,
 		"stateMutability": "payable",
 		"type": "function"
 	},

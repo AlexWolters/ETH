@@ -1,6 +1,15 @@
 
 
+var result2;
+function foo(input){
+result2=input;
+console.log(input);
+}
 
+function boo(input){
+result2=input.c[0];
+console.log(typeof(input.c[0]));
+}
 
 
 
@@ -48,11 +57,7 @@ contractInstance.ownerOf.call(tokenId,{ from: web3.eth.defaultAccount  },
 
 }
 
-var result2;
-function foo(input){
-result2=input;
-console.log(input);
-}
+
 
 async function getTokenUri(abi,adr,tokenId){
 
@@ -75,8 +80,7 @@ async function buyToken(abi,adr,tokenId,price){
 let web3 = new Web3(window.ethereum);
 web3.eth.defaultAccount=web3.eth.accounts[0];
 const contractInstance = web3.eth.contract(abi).at(adr);
-this._payable=true;
-let result=await contractInstance.buyToken.sendTransaction(tokenId,{ from: web3.eth.defaultAccount, value: 100000000000000000},
+let result=await contractInstance.buyToken.sendTransaction(tokenId,{ from: web3.eth.defaultAccount, value: price},
 function(err, res){console.log(res);});
 return result ;
 
@@ -90,10 +94,10 @@ web3.eth.defaultAccount=web3.eth.accounts[0];
 let contractInstance = web3.eth.contract(abi).at(adr);
 let result="string";
 contractInstance._getBuyPrice.call(tokenId,{ from: web3.eth.defaultAccount  },
-  (err, res) => { console.log(res);
-  return res;
+  (err, res) => { foo(res);
+  
   });
-
+  return result2;
 }
 
 
@@ -104,10 +108,10 @@ web3.eth.defaultAccount=web3.eth.accounts[0];
 let contractInstance = web3.eth.contract(abi).at(adr);
 let result="string";
 contractInstance._getMyOwnerId.call(tokenId,{ from: web3.eth.defaultAccount  },
-  (err, res) => { console.log(res);
+  (err, res) => { foo(res);
   return res;
   });
-
+  return result2;
 }
 
 async function getSubOwner(abi,adr,tokenId,index){
@@ -117,9 +121,10 @@ web3.eth.defaultAccount=web3.eth.accounts[0];
 let contractInstance = web3.eth.contract(abi).at(adr);
 let result="string";
 contractInstance._getSubOwners.call(tokenId,index,{ from: web3.eth.defaultAccount  },
-  (err, res) => { console.log(res);
+  (err, res) => { foo(res);
   return res;
   });
+  return result2;
 
 }
 //RENTING
@@ -130,10 +135,10 @@ web3.eth.defaultAccount=web3.eth.accounts[0];
 let contractInstance = web3.eth.contract(abi).at(adr);
 let result="string";
 contractInstance._getRentPrice.call(tokenId,{ from: web3.eth.defaultAccount  },
-  (err, res) => { console.log(res);
+  (err, res) => { foo(res);
   return res;
   });
-
+return result2;
 }
 
 async function getRenter(abi,adr,tokenId,index){
@@ -143,9 +148,10 @@ web3.eth.defaultAccount=web3.eth.accounts[0];
 let contractInstance = web3.eth.contract(abi).at(adr);
 let result="string";
 contractInstance._getRenter.call(tokenId,index,{ from: web3.eth.defaultAccount  },
-  (err, res) => { console.log(res);
+  (err, res) => { foo(res);
   return res;
   });
+  return result2;
 
 }
 
@@ -158,10 +164,10 @@ web3.eth.defaultAccount=web3.eth.accounts[0];
 let contractInstance = web3.eth.contract(abi).at(adr);
 let result="string";
 contractInstance._getDeadline.call(tokenId,target,{ from: web3.eth.defaultAccount  },
-  (err, res) => { console.log(res);
+  (err, res) => { foo(res);
   return res;
   });
-
+  return result2;
 }
 
 async function getMyRenterId(abi,adr,tokenId){
@@ -171,12 +177,22 @@ web3.eth.defaultAccount=web3.eth.accounts[0];
 let contractInstance = web3.eth.contract(abi).at(adr);
 let result="string";
 contractInstance._getMyRenterId.call(tokenId,{ from: web3.eth.defaultAccount  },
-  (err, res) => { console.log(res);
+  (err, res) => { foo(res);
   return res;
   });
-
+  return result2;
 }
 
 
+async function rentToken(abi,adr,tokenId,price, weeks){
+
+let web3 = new Web3(window.ethereum);
+web3.eth.defaultAccount=web3.eth.accounts[0];
+const contractInstance = web3.eth.contract(abi).at(adr);
+let result=await contractInstance.rentToken.sendTransaction(tokenId,weeks,{ from: web3.eth.defaultAccount, value: price},
+function(err, res){console.log(res);});
+return result ;
+
+}
 
 
