@@ -1,13 +1,13 @@
 {
   "ExpandedNodes": [
     "",
+    "\\changer",
     "\\src",
     "\\src\\app",
     "\\src\\app\\post",
-    "\\src\\app\\post\\post-create",
-    "\\src\\assets",
-    "\\src\\assets\\Eth"
+    "\\src\\assets\\Eth",
+    "\\src\\environments"
   ],
-  "SelectedNode": "\\src\\assets\\Eth\\Eth.js",
+  "SelectedNode": "\\package.json",
   "PreviewInSolutionExplorer": false
 }
