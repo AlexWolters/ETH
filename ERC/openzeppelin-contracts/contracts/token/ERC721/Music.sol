@@ -4,10 +4,6 @@ import "./ERC721.sol";
 
 contract Music is ERC721{
     uint256 public tokenID;
-    struct PriceStruct{
-        uint256 buy;
-        uint256 rent;
-    }
     struct SubownerStruct{
 
     uint256 counter;
